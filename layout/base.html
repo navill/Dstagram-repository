@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg sticky-top navbar-light bg-light">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01"
+            aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'photo:index' %}">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/">Tags</a>
+            </li>
+            {% if user.is_authenticated %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'photo:create' %}">Upload</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'accounts:signout' %}">Sign-out</a>
+            </li>
+            {% else %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'account_login' %}">Sing-in</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'accounts:signup' %}">Sign-up</a>
+            </li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>
+{% load static %}
+<style>
+    .btn-like{
+    display: inline-block; /* html 요소의 영역 표시 속성 */
+    width: 25px;
+    height: 25px;
+    background:url({% static 'images/instagram.png' %});
+    background-position: -231px -129px;
+    text-indent:-9999px;  /* 영역 안에 있는 텍스트의 들여쓰기 */
+    overflow:hidden;
+    border:none;
+    }
+    .btn-like.active{
+    /* 어떤 요소를 클릭했을 때, class를 더하거나 빼서 효과를 변경한다.*/
+    background-position: -231px -105px;
+    }
+    .btn-favorite{
+    display: inline-block; /* html 요소의 영역 표시 속성 */
+    width: 25px;
+    height: 25px;
+    background:url({% static 'images/instagram.png' %});
+    background-position: -208px -255px;
+    text-indent:-9999px;
+    overflow:hidden;
+    border:none;
+    }
+    .btn-favorite.active{
+    background-position: -130.4px -254px
+    }
+
+
+
+
+</style>
+<div id="test_button">
+</div>
+
+<div class="container">
+    {% if messages %}
+    <div class="row">
+        <div class="col"></div>
+        <div class="col-6">
+            {% for message in messages %}
+            <div class="alert alert-{{message.tags}}">{{message}}</div>
+            {% endfor %}
+        </div>
+        <div class="col"></div>
+    </div>
+    {% endif %}
+    {% block content %}
+    {% endblock %}
+</div>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+<script type="text/javascript">
+    $(function() {
+        <!--$('.btn-like').click(function(e){-->
+            <!--e.preventDefault();-->
+            <!--$(this).toggleClass('active');  링크 이동을 막는 용도-->
+            <!--$(this).blur();-->
+        <!--});-->
+
+        <!--$('.btn-save').click(function(e){-->
+            <!--e.preventDefault();-->
+            <!--$(this).toggleClass('active');-->
+            <!--$(this).blur();-->
+        <!--});-->
+        $('.navbar-nav mr-auto mt-2 mt-lg-0 li:nth-child(5)').on('click', function(){
+                $(this).css('font-wight', 'bold');
+            });
+    });
+
+
+
+
+</script>
+</body>
+</html>

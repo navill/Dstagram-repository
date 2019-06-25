@@ -1,0 +1,13 @@
+venv/
+.DS_Store/
+.idea/
+.ipynb_checkpoints/
+__pycache__/
+secret_key.py
+django.cert
+django.key
+Untitled.ipynb
+static/
+staticfiles/
+s3_upload.py
+requirements.txt

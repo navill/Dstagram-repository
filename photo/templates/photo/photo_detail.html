@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block title %}
+{% endblock %}
+
+{% block content%}
+<div class="row">
+    <div class="col"></div>
+    <div class="col-6">
+        <div class="card" style="margin-top:2em;">
+            <div class="card-header">
+                {{object.author.username}}
+            </div>
+            <img src="{{object.image.url}}" class="card-img-top">
+            {% if object.text %}
+            <div class="card-body">
+                <p class="card-text"> {{object.text}} </p>
+                <p class="card-text">
+                    <small class="text-muted"> Last updated {{object.updated}}</small>
+                </p>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <a href="{% url 'photo:like' object.id %}" class="float-left btn-like
+                    {% if user in object.like.all %}active{% endif %}">Like</a>
+                    {% if object.like.all.count %}
+                    <span class="float-left badge badge-danger"
+                          style="margin-lef:0.5em;"> {{ object.like.all.count}}</span>
+                    {% endif %}
+                    <a href="{% url 'photo:favorite' object.id %}" class="float-right btn-favorite
+                    {% if user in object.favorite.all %}active{% endif %}">Save</a>
+                </li>
+                <li class="list-group-item">
+                    <a href="{% url 'photo:update' object.id %}" class="card-link">수정</a>
+                    <a href="{% url 'photo:delete' object.id %}" class="card-link">삭제</a>
+                </li>
+            </ul>
+            {% endif %}
+            {# load xxx : 해당 태그 기능을 이 아래부터 사용하겠다 #}
+            {% load disqus_tags %}
+            <div class="card-body">
+                {% disqus_show_comments %}
+            </div>
+        </div>
+    </div>
+    <div class="col"></div>
+</div>
+{% endblock %}
